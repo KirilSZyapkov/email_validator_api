@@ -1,132 +1,259 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
+<div align="center">
+
+# 📧 Email & Domain Validator API
+
+<p>
+  <strong>A fast, lightweight, zero-dependency REST API built with NestJS and TypeScript for real-time email address and domain validation.</strong>
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
+<p>
+  <img src="https://shields.io" alt="NestJS" />
+  <img src="https://shields.io" alt="TypeScript" />
+  <img src="https://shields.io" alt="Node.js" />
+  <img src="https://shields.io" alt="RapidAPI Ready" />
+  <img src="https://shields.io" alt="MIT License" />
 </p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+<p>
+  <a href="#-features">Features</a> •
+  <a href="#-getting-started">Getting Started</a> •
+  <a href="#-api-endpoints">API Endpoints</a> •
+  <a href="#-security">RapidAPI Security</a>
+</p>
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+</div>
 
-## Project setup
+<hr />
 
-```bash
-$ npm install
+## ✨ Features
+
+<table>
+  <tr>
+    <td width="50%">
+      <h3>🔍 Syntax & Format Check</h3>
+      <p>Instantly validates email addresses and domains against standard formatting rules before making any network calls.</p>
+    </td>
+    <td width="50%">
+      <h3>🌐 Real-Time DNS / MX Lookup</h3>
+      <p>Uses native Node.js <code>dns/promises</code> to verify that the domain exists and has active mail exchange (MX) servers.</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%">
+      <h3>🗑️ Disposable Email Detection</h3>
+      <p>Blocks fake signups by identifying temporary and throwaway email providers (e.g., <code>10minutemail.com</code>, <code>tempmail.com</code>).</p>
+    </td>
+    <td width="50%">
+      <h3>🏢 Free vs. Corporate Check</h3>
+      <p>Distinguishes between free public webmail (e.g., <code>gmail.com</code>, <code>yahoo.com</code>) and B2B corporate domains.</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%">
+      <h3>💡 Smart Typo Suggestions</h3>
+      <p>Catches common domain typos (e.g., <code>gmial.com</code> → <code>gmail.com</code>) and returns a ready-to-use <code>didYouMean</code> suggestion.</p>
+    </td>
+    <td width="50%">
+      <h3>⚡ Bulk Validation & Scoring</h3>
+      <p>Validates up to <strong>50 emails concurrently</strong> in a single request and provides a <code>0–100</code> deliverability score.</p>
+    </td>
+  </tr>
+</table>
+
+<hr />
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+<ul>
+  <li><strong>Node.js</strong> (v18 or higher)</li>
+  <li><strong>npm</strong></li>
+</ul>
+
+### Installation
+
+<ol>
+  <li>
+    <strong>Clone the repository:</strong>
+    <pre><code>git clone https://github.com
+cd email-validator-api</code></pre>
+  </li>
+  <li>
+    <strong>Install dependencies:</strong>
+    <pre><code>npm install</code></pre>
+  </li>
+  <li>
+    <strong>Start the development server:</strong>
+    <pre><code>npm run start:dev</code></pre>
+  </li>
+</ol>
+
+<blockquote>
+  💡 The API will be live and ready for local testing at <code>http://localhost:3000/v1</code>.
+</blockquote>
+
+<hr />
+
+## 🔒 Security & Production Setup
+
+This project includes a built-in NestJS Guard (<code>RapidApiGuard</code>) that verifies the <code>X-RapidAPI-Proxy-Secret</code> header on every incoming request, preventing unauthorized direct access to your server.
+
+Set the following environment variables on your hosting provider:
+
+```env
+PORT=3000
+RAPIDAPI_PROXY_SECRET=your_rapidapi_proxy_secret_key
 ```
 
-## Compile and run the project
+Build and run in production mode:
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+npm run build
+npm run start:prod
 ```
 
-## Run tests
+<blockquote>
+  <strong>Note:</strong> When <code>RAPIDAPI_PROXY_SECRET</code> is omitted (such as during local development), the guard automatically allows all requests.
+</blockquote>
 
-```bash
-# unit tests
-$ npm run test
+<hr />
 
-# e2e tests
-$ npm run test:e2e
+## 📡 API Endpoints
 
-# test coverage
-$ npm run test:cov
-```
+<p><strong>Base URL:</strong> <code>/v1</code></p>
 
-## Deployment
+### 1. Validate Single Email
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+<table>
+  <tr>
+    <td><strong>Method</strong></td>
+    <td><code>GET</code></td>
+  </tr>
+  <tr>
+    <td><strong>Endpoint</strong></td>
+    <td><code>/v1/validate/email</code></td>
+  </tr>
+  <tr>
+    <td><strong>Query Param</strong></td>
+    <td><code>email</code> <em>(required)</em> — The email address to validate.</td>
+  </tr>
+</table>
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+<details>
+  <summary><strong>Click to view Example Request & Response</strong></summary>
+  <br />
+  <p><strong>Request:</strong></p>
+  <pre><code>curl "http://localhost:3000/v1/validate?email=john.doe@gmial.com"</code></pre>
+  <p><strong>Response (<code>200 OK</code>):</strong></p>
+  <pre><code>{
+  "email": "john.doe@gmial.com",
+  "isValidSyntax": true,
+  "domain": "gmial.com",
+  "hasMxRecords": true,
+  "mxRecords": [
+    "://gmial.com"
+  ],
+  "isDisposable": false,
+  "isFreeProvider": false,
+  "didYouMean": "john.doe@gmail.com",
+  "score": 40,
+  "isDeliverable": false
+}</code></pre>
+</details>
 
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
+<br />
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### 2. Bulk Email Validation
 
-## Observability
+<table>
+  <tr>
+    <td><strong>Method</strong></td>
+    <td><code>POST</code></td>
+  </tr>
+  <tr>
+    <td><strong>Endpoint</strong></td>
+    <td><code>/v1/validate/bulk</code></td>
+  </tr>
+  <tr>
+    <td><strong>Body</strong></td>
+    <td><code>application/json</code> — Array of up to 50 email strings under the <code>emails</code> key.</td>
+  </tr>
+</table>
 
-In production applications, observability is essential for understanding how your system behaves, detecting issues early, and maintaining reliable performance.
+<details>
+  <summary><strong>Click to view Example Request & Response</strong></summary>
+  <br />
+  <p><strong>Request:</strong></p>
+  <pre><code>curl -X POST "http://localhost:3000/v1/validate/bulk" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "emails": [
+      "contact@company.com",
+      "temp@10minutemail.com",
+      "invalid-email"
+    ]
+  }'</code></pre>
+  <p><strong>Response (<code>200 OK</code>):</strong></p>
+  <pre><code>{
+  "total": 3,
+  "results": [
+    {
+      "email": "contact@company.com",
+      "isValidSyntax": true,
+      "domain": "company.com",
+      "hasMxRecords": true,
+      "mxRecords": ["://company.com"],
+      "isDisposable": false,
+      "isFreeProvider": false,
+      "didYouMean": null,
+      "score": 100,
+      "isDeliverable": true
+    }
+  ]
+}</code></pre>
+</details>
 
-[NestJS Observe](https://observe.nestjs.com) automatically instruments your NestJS application, giving you deep visibility into your system with minimal setup:
+<br />
 
-- **Distributed tracing:** Follow requests across services and understand how they flow through your system.
-- **Waterfall analysis:** Visualize request execution and identify slow operations, bottlenecks, and unexpected delays.
-- **Performance analysis:** Analyze application performance in real time and quickly pinpoint areas that need optimization.
-- **Metrics:** Track key application and infrastructure metrics to understand system health and performance trends.
-- **Logging:** Centralize and correlate logs with traces and other telemetry to make debugging easier.
-- **Error tracking:** Detect errors quickly and investigate their root causes with the surrounding context.
-- **SLA monitoring:** Track service-level objectives and identify when your application is approaching or exceeding defined thresholds.
-- **Alarms and alerts:** Set up alerts for critical errors, performance degradation, SLA violations, and other anomalies so your team can react quickly.
+### 3. Validate Domain
 
-To add it to this project, run this and approve the code it prints at [observe.nestjs.com/link](https://observe.nestjs.com/link) - signing up for free if you have no account:
+<table>
+  <tr>
+    <td><strong>Method</strong></td>
+    <td><code>GET</code></td>
+  </tr>
+  <tr>
+    <td><strong>Endpoint</strong></td>
+    <td><code>/v1/validate/domain</code></td>
+  </tr>
+  <tr>
+    <td><strong>Query Param</strong></td>
+    <td><code>domain</code> <em>(required)</em> — Domain name or full URL (automatically strips <code>http://</code>, <code>https://</code>, and <code>www.</code>).</td>
+  </tr>
+</table>
 
-```bash
-$ npx @nestjs/observe link
-```
+<details>
+  <summary><strong>Click to view Example Request & Response</strong></summary>
+  <br />
+  <p><strong>Request:</strong></p>
+  <pre><code>curl "http://localhost:3000/v1/validate/domain?domain=https://google.com"</code></pre>
+  <p><strong>Response (<code>200 OK</code>):</strong></p>
+  <pre><code>{
+  "domain": "google.com",
+  "isValidSyntax": true,
+  "hasMxRecords": true,
+  "mxRecords": [
+    "://google.com"
+  ],
+  "isDisposable": false,
+  "isFreeProvider": false,
+  "canReceiveEmail": true
+}</code></pre>
+</details>
 
-It installs `@nestjs/observe`, wires it into `AppModule` and `main.ts`, and writes the app key and secret into `.env`, which every `nest start` script (`start`, `start:dev`, `start:debug`) then loads. In production, set `OBSERVE_APP_KEY` and `OBSERVE_APP_SECRET` in the environment instead.
+<hr />
 
-Or do it by hand:
-
-```bash
-$ npm install @nestjs/observe
-```
-
-Then follow the [setup guide](https://docs.nestjs.com/observability/sdk) - it takes a single import and an app key.
-
-The free plan needs no payment details and covers 300,000 events a month. You can also browse the [live demo](https://www.observe-demo.nestjs.com/dashboard) first - the whole dashboard over a busy service's data, with nothing to install.
-
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Auto-instrument your application with [NestJS Observe](https://observe.nestjs.com). Distributed tracing, metrics, and logging made easy. Error tracking and performance monitoring for your NestJS applications.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+<div align="center">
+  <p>Built with ❤️ using <strong>NestJS</strong> • Licensed under the <strong>MIT License</strong></p>
+</div>
